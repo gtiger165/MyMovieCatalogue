@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">My Movie Catalogue</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="title_movie">Film</string>
+    <string name="title_tv_show">Acara TV</string>
+    <string name="title_change_language">Ganti Bahasa</string>
+    <string name="tv_show_poster">Poster Acara TV</string>
+    <string name="movie_poster">Poster Film</string>
+    <string name="description_title">Deskripsi</string>
+    <string name="actionbar_movie">Film</string>
+    <string name="actionbar_tv_show">Acara TV</string>
+</resources>

@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 import com.hirarki.mymoviecatalogue.R;
 import com.hirarki.mymoviecatalogue.adapter.TvShowAdapter;
 import com.hirarki.mymoviecatalogue.model.TvShow;
+import com.hirarki.mymoviecatalogue.model.TvShowList;
 import com.hirarki.mymoviecatalogue.viewModel.TvViewModel;
 
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class TvShowFragment extends Fragment {
     private TvShowAdapter adapter;
     private ProgressBar progressBar;
     private TvViewModel tvViewModel;
+    private RecyclerView rv;
 
     public TvShowFragment() {
         // Required empty public constructor
@@ -38,29 +40,25 @@ public class TvShowFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        adapter = new TvShowAdapter();
         View view = inflater.inflate(R.layout.fragment_tv_show, container, false);
-        RecyclerView rv = view.findViewById(R.id.rv_show);
+        rv = view.findViewById(R.id.rv_show);
         rv.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        rv.setAdapter(adapter);
 
         progressBar = view.findViewById(R.id.progressBar);
 
         tvViewModel = ViewModelProviders.of(this).get(TvViewModel.class);
-        tvViewModel.getListTvShow().observe(this, getShow);
-        tvViewModel.setTvShow("EXTRA_SHOW");
+        tvViewModel.getShows().observe(this, getShow);
 
         showLoading(true);
 
         return view;
     }
 
-    private Observer<ArrayList<TvShow>> getShow = new Observer<ArrayList<TvShow>>() {
+    private Observer<TvShowList> getShow = new Observer<TvShowList>() {
         @Override
-        public void onChanged(@Nullable ArrayList<TvShow> tvShows) {
-            if (tvShows != null) {
-                adapter.setShowList(tvShows);
-            }
+        public void onChanged(@Nullable TvShowList tvShowList) {
+            adapter = new TvShowAdapter(getContext(), tvShowList.getResults());
+            rv.setAdapter(adapter);
             showLoading(false);
         }
     };

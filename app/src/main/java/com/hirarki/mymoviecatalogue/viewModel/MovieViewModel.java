@@ -1,11 +1,22 @@
 package com.hirarki.mymoviecatalogue.viewModel;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.hirarki.mymoviecatalogue.adapter.MovieAdapter;
 import com.hirarki.mymoviecatalogue.model.Movie;
+import com.hirarki.mymoviecatalogue.model.MovieList;
 import com.hirarki.mymoviecatalogue.rest.ApiClient;
+import com.hirarki.mymoviecatalogue.rest.ApiService;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -14,46 +25,39 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MovieViewModel extends ViewModel {
     private final static String api = ApiClient.getApiKey();
-    private MutableLiveData<ArrayList<Movie>> listMovies = new MutableLiveData<>();
+    private MutableLiveData<MovieList> listMovies;
 
-    public void setMovie(final String movie) {
-        AsyncHttpClient client = new AsyncHttpClient();
-        final ArrayList<Movie> itemList = new ArrayList<>();
-        String url = "https://api.themoviedb.org/3/discover/movie?api_key=" +api+ "&language=en-US";
+    public void loadMovies() {
+        ApiService service = ApiClient.getClient().create(ApiService.class);
 
-        client.get(url, new AsyncHttpResponseHandler() {
+        Call<MovieList> movieCall = service.getMovieList(api);
+        movieCall.enqueue(new Callback<MovieList>() {
             @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                try {
-                    String result = new String(responseBody);
-                    JSONObject responseObject = new JSONObject(result);
-                    JSONArray list = responseObject.getJSONArray("results");
-
-                    for (int i = 0; i < list.length(); i++) {
-                        JSONObject movie = list.getJSONObject(i);
-                        Movie movieItems = new Movie(movie);
-                        itemList.add(movieItems);
-                    }
-                    listMovies.postValue(itemList);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Log.d("Exception", e.getMessage());
-                }
+            public void onResponse(Call<MovieList> call, Response<MovieList> response) {
+                listMovies.setValue(response.body());
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                Log.d("onFailure", error.getMessage());
+            public void onFailure(Call<MovieList> call, Throwable t) {
+                Log.e("onFailureMovie", t.getMessage());
             }
         });
     }
 
-    public MutableLiveData<ArrayList<Movie>> getListMovies() {
+    public LiveData<MovieList> getMovies() {
+        if (listMovies == null) {
+            listMovies = new MutableLiveData<>();
+            loadMovies();
+        }
         return listMovies;
     }
 }

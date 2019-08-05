@@ -1,5 +1,7 @@
 package com.hirarki.mymoviecatalogue.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -11,23 +13,24 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.hirarki.mymoviecatalogue.R;
+import com.hirarki.mymoviecatalogue.activity.DetailActivity;
 import com.hirarki.mymoviecatalogue.model.Movie;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
-    private ArrayList<Movie> movieList = new ArrayList<>();
+    private Context context;
+    private List<Movie> movieList;
 
-    public void setMovieList(ArrayList<Movie> itemMovie) {
-        movieList.clear();
-        movieList.addAll(itemMovie);
-        notifyDataSetChanged();
+    public MovieAdapter(Context context, List<Movie> movieList) {
+        this.context = context;
+        this.movieList = movieList;
     }
 
     @NonNull
     @Override
     public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View row = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_movie_cardview, viewGroup, false);
+        View row = LayoutInflater.from(context).inflate(R.layout.item_movie_cardview, viewGroup, false);
         return new MovieViewHolder(row);
     }
 
@@ -41,7 +44,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         return movieList.size();
     }
 
-    public class MovieViewHolder extends RecyclerView.ViewHolder {
+    public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView imgPoster;
         TextView tvTitle, tvOverview, tvReleaseDate, tvRating, tvVote;
 
@@ -54,21 +57,33 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             tvRating = itemView.findViewById(R.id.tv_item_rating);
             tvVote = itemView.findViewById(R.id.tv_item_vote);
             imgPoster = itemView.findViewById(R.id.img_poster_movie);
+
+            itemView.setOnClickListener(this);
         }
 
         void bind(Movie movie) {
-            String voteAverage = Double.toString(movie.getVoteAverage());
-            String url_image = "https://image.tmdb.org/t/p/w185" + movie.getPhoto();
+            String url_image = "https://image.tmdb.org/t/p/w185" + movie.getPosterPath();
 
             tvTitle.setText(movie.getTitle());
             tvOverview.setText(movie.getOverview());
             tvReleaseDate.setText(movie.getReleaseDate());
-            tvRating.setText(voteAverage);
-            tvVote.setText(movie.getVoteCount());
+            tvRating.setText(Double.toString(movie.getVoteAverage()));
+            tvVote.setText(Double.toString(movie.getVoteCount()));
 
             Glide.with(itemView.getContext())
                     .load(url_image)
                     .into(imgPoster);
+        }
+
+        @Override
+        public void onClick(View view) {
+            int position = getAdapterPosition();
+            Movie movie = movieList.get(position);
+
+            Intent detailMovieIntent = new Intent(view.getContext(), DetailActivity.class);
+            detailMovieIntent.putExtra("cek_data", "movie");
+            detailMovieIntent.putExtra(DetailActivity.EXTRA_MOVIE, movie);
+            view.getContext().startActivity(detailMovieIntent);
         }
     }
 }
