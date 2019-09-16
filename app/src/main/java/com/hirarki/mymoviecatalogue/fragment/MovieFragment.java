@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -23,11 +24,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MovieFragment extends Fragment {
+public class MovieFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private MovieAdapter adapter;
-    private ProgressBar progressBar;
     private MovieViewModel movieViewModel;
     private RecyclerView rv;
+    private SwipeRefreshLayout swipe;
 
     public MovieFragment() {
         // Required empty public constructor
@@ -41,12 +42,13 @@ public class MovieFragment extends Fragment {
         rv = view.findViewById(R.id.rv_movie);
         rv.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
-        progressBar = view.findViewById(R.id.progressBar);
+        swipe = view.findViewById(R.id.swipe_container);
 
+        swipe.setRefreshing(true);
         movieViewModel = ViewModelProviders.of(this).get(MovieViewModel.class);
         movieViewModel.getMovies().observe(this, getMovie);
 
-        showLoading(true);
+        swipe.setOnRefreshListener(this);
 
         return view;
     }
@@ -56,15 +58,23 @@ public class MovieFragment extends Fragment {
         public void onChanged(@Nullable MovieList movieList) {
             adapter = new MovieAdapter(getContext(), movieList.getResults());
             rv.setAdapter(adapter);
-            showLoading(false);
+            swipe.setRefreshing(false);
         }
     };
 
-    private void showLoading(Boolean state) {
-        if (state) {
-            progressBar.setVisibility(View.VISIBLE);
-        } else {
-            progressBar.setVisibility(View.GONE);
-        }
+    @Override
+    public void onRefresh() {
+        Log.d("OnRefresh", "On Refresh State");
+        swipe.setRefreshing(true);
+        movieViewModel.loadMovies();
+        movieViewModel.getMovies().observe(this, new Observer<MovieList>() {
+            @Override
+            public void onChanged(@Nullable MovieList movieList) {
+                Log.d("OnChangedRefresh", "Changed Complete");
+                swipe.setRefreshing(false);
+                adapter = new MovieAdapter(getContext(), movieList.getResults());
+                rv.setAdapter(adapter);
+            }
+        });
     }
 }

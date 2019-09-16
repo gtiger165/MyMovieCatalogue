@@ -1,6 +1,7 @@
 package com.hirarki.mymoviecatalogue.activity;
 
 import android.os.Handler;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +18,7 @@ public class DetailActivity extends AppCompatActivity {
     public static final String EXTRA_MOVIE = "extra_movie";
     public static final String EXTRA_SHOW = "extra_show";
     private String url_image = "https://image.tmdb.org/t/p/w185";
+    private ConstraintLayout layoutDetail;
     TextView tvTitle, tvDate, tvVoteCount, tvRating, tvOverview;
     ImageView imgPoster;
     ProgressBar progressBar;
@@ -44,82 +46,53 @@ public class DetailActivity extends AppCompatActivity {
         tvOverview = findViewById(R.id.tv_description);
         imgPoster = findViewById(R.id.img_poster_detail);
         progressBar = findViewById(R.id.progressBarShowDetail);
+        layoutDetail = findViewById(R.id.layout_detail);
     }
 
 
     private void getMovieDetail() {
         progressBar.setVisibility(View.VISIBLE);
-        final Handler handler = new Handler();
+        layoutDetail.setVisibility(View.GONE);
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(5000);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        Movie movie = getIntent().getParcelableExtra(EXTRA_MOVIE);
 
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        Movie movie = getIntent().getParcelableExtra(EXTRA_MOVIE);
+        getSupportActionBar().setTitle("Movie Detail");
 
-                        getSupportActionBar().setTitle(movie.getTitle());
+        String imgMovie = url_image + movie.getPosterPath();
 
-                        String imgMovie = url_image + movie.getPosterPath();
+        tvTitle.setText(movie.getTitle());
+        tvRating.setText(String.valueOf(movie.getVoteAverage()));
+        tvVoteCount.setText(String.valueOf(movie.getVoteCount()));
+        tvDate.setText(movie.getReleaseDate());
+        tvOverview.setText(movie.getOverview());
+        Glide.with(DetailActivity.this)
+                .load(imgMovie)
+                .into(imgPoster);
 
-                        tvTitle.setText(movie.getTitle());
-                        tvRating.setText(String.valueOf(movie.getVoteAverage()));
-                        tvVoteCount.setText(String.valueOf(movie.getVoteCount()));
-                        tvDate.setText(movie.getReleaseDate());
-                        tvOverview.setText(movie.getOverview());
-                        Glide.with(DetailActivity.this)
-                                .load(imgMovie)
-                                .into(imgPoster);
-
-                        progressBar.setVisibility(View.INVISIBLE);
-                    }
-                });
-            }
-        }).start();
+        layoutDetail.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.GONE);
     }
 
     private void getShowDetail() {
         progressBar.setVisibility(View.VISIBLE);
-        final Handler handler = new Handler();
+        layoutDetail.setVisibility(View.GONE);
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(5000);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        TvShow tvShow = getIntent().getParcelableExtra(EXTRA_SHOW);
 
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        TvShow tvShow = getIntent().getParcelableExtra(EXTRA_SHOW);
+        getSupportActionBar().setTitle("TV Show Detail");
 
-                        getSupportActionBar().setTitle(tvShow.getName());
+        String imgMovie = url_image + tvShow.getPosterPath();
 
-                        String imgMovie = url_image + tvShow.getPosterPath();
+        tvTitle.setText(tvShow.getName());
+        tvRating.setText(String.valueOf(tvShow.getVoteAverage()));
+        tvVoteCount.setText(String.valueOf(tvShow.getVoteCount()));
+        tvDate.setText(tvShow.getAirDate());
+        tvOverview.setText(tvShow.getOverview());
+        Glide.with(DetailActivity.this)
+                .load(imgMovie)
+                .into(imgPoster);
 
-                        tvTitle.setText(tvShow.getName());
-                        tvRating.setText(String.valueOf(tvShow.getVoteAverage()));
-                        tvVoteCount.setText(String.valueOf(tvShow.getVoteCount()));
-                        tvDate.setText(tvShow.getAirDate());
-                        tvOverview.setText(tvShow.getOverview());
-                        Glide.with(DetailActivity.this)
-                                .load(imgMovie)
-                                .into(imgPoster);
-
-                        progressBar.setVisibility(View.INVISIBLE);
-                    }
-                });
-            }
-        }).start();
+        layoutDetail.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.GONE);
     }
 }

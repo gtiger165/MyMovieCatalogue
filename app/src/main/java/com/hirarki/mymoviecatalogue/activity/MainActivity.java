@@ -9,13 +9,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.hirarki.mymoviecatalogue.R;
 import com.hirarki.mymoviecatalogue.fragment.MovieFragment;
 import com.hirarki.mymoviecatalogue.fragment.TvShowFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    FloatingActionMenu fam;
+    FloatingActionButton fabMovie, fabShow;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -54,6 +59,18 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             navView.setSelectedItemId(R.id.navigation_movie);
         }
+
+        prepareFavMenu();
+    }
+
+    private void prepareFavMenu() {
+        fam = findViewById(R.id.fam);
+        fabMovie = findViewById(R.id.fab_movie);
+        fabShow = findViewById(R.id.fab_show);
+
+
+        fabMovie.setOnClickListener(this);
+        fabShow.setOnClickListener(this);
     }
 
     @Override
@@ -69,5 +86,15 @@ public class MainActivity extends AppCompatActivity {
             startActivity(mIntent);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.fab_movie:
+                break;
+            case R.id.fab_show:
+                break;
+        }
     }
 }

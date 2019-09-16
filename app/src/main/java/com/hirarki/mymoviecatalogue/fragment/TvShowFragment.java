@@ -6,8 +6,10 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,11 +27,11 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TvShowFragment extends Fragment {
+public class TvShowFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private TvShowAdapter adapter;
-    private ProgressBar progressBar;
     private TvViewModel tvViewModel;
     private RecyclerView rv;
+    private SwipeRefreshLayout swipeShow;
 
     public TvShowFragment() {
         // Required empty public constructor
@@ -44,12 +46,14 @@ public class TvShowFragment extends Fragment {
         rv = view.findViewById(R.id.rv_show);
         rv.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
-        progressBar = view.findViewById(R.id.progressBar);
+        swipeShow = view.findViewById(R.id.swipe_container_show);
+
+        swipeShow.setRefreshing(true);
 
         tvViewModel = ViewModelProviders.of(this).get(TvViewModel.class);
         tvViewModel.getShows().observe(this, getShow);
 
-        showLoading(true);
+        swipeShow.setOnRefreshListener(this);
 
         return view;
     }
@@ -59,15 +63,23 @@ public class TvShowFragment extends Fragment {
         public void onChanged(@Nullable TvShowList tvShowList) {
             adapter = new TvShowAdapter(getContext(), tvShowList.getResults());
             rv.setAdapter(adapter);
-            showLoading(false);
+            swipeShow.setRefreshing(false);
         }
     };
 
-    private void showLoading(Boolean state) {
-        if (state) {
-            progressBar.setVisibility(View.VISIBLE);
-        } else {
-            progressBar.setVisibility(View.GONE);
-        }
+    @Override
+    public void onRefresh() {
+        Log.d("OnRefresh", "On Refresh State");
+        swipeShow.setRefreshing(true);
+        tvViewModel.loadShows();
+        tvViewModel.getShows().observe(this, new Observer<TvShowList>() {
+            @Override
+            public void onChanged(@Nullable TvShowList tvShowList) {
+                Log.d("OnChangedRefresh", "Changed Complete");
+                swipeShow.setRefreshing(false);
+                adapter = new TvShowAdapter(getContext(), tvShowList.getResults());
+                rv.setAdapter(adapter);
+            }
+        });
     }
 }

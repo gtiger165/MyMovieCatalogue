@@ -11,4 +11,7 @@
     <string name="description_title">Deskripsi</string>
     <string name="actionbar_movie">Film</string>
     <string name="actionbar_tv_show">Acara TV</string>
+    <string name="fam_fav_list">Daftar Favorit</string>
+    <string name="fav_movie">Film Favorit</string>
+    <string name="fav_show">Acara Favorit</string>
 </resources>

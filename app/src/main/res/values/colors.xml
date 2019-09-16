@@ -3,4 +3,9 @@
     <color name="colorPrimary">#003585</color>
     <color name="colorPrimaryDark">#001957</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="colorAccentDark">#921740</color>
+    <color name="colorLight">#EBE4E5</color>
+    <color name="colorMovie">#2196F3</color>
+    <color name="colorTvShow">#175E97</color>
+    <color name="main_bg">#A8E4EE</color>
 </resources>
