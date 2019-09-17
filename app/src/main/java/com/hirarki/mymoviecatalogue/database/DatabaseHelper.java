@@ -20,13 +20,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     " %s TEXT NOT NULL," +
                     " %s TEXT NOT NULL," +
                     " %s TEXT NOT NULL," +
-                    " %s TEXT NOT NULL," +
                     " %s TEXT NOT NULL)",
             TABLE_NAME_MOVIE,
             DatabaseContract.FavoriteMovies._ID,
             DatabaseContract.FavoriteMovies.TITLE,
             DatabaseContract.FavoriteMovies.VOTE_COUNT,
-            DatabaseContract.FavoriteMovies.ORIGINAL_LANGUAGE,
             DatabaseContract.FavoriteMovies.OVERVIEW,
             DatabaseContract.FavoriteMovies.RELEASE_DATE,
             DatabaseContract.FavoriteMovies.VOTE_AVERAGE,
@@ -40,13 +38,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     " %s TEXT NOT NULL," +
                     " %s TEXT NOT NULL," +
                     " %s TEXT NOT NULL," +
-                    " %s TEXT NOT NULL," +
                     " %s TEXT NOT NULL)",
             TABLE_NAME_SHOWS,
             DatabaseContract.FavoriteShows._ID,
             DatabaseContract.FavoriteShows.TV_TITLE,
             DatabaseContract.FavoriteShows.TV_VOTE_COUNT,
-            DatabaseContract.FavoriteShows.TV_ORIGINAL_LANGUAGE,
             DatabaseContract.FavoriteShows.TV_OVERVIEW,
             DatabaseContract.FavoriteShows.TV_RELEASE_DATE,
             DatabaseContract.FavoriteShows.TV_VOTE_AVERAGE,

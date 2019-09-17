@@ -14,4 +14,6 @@
     <string name="fam_fav_list">Daftar Favorit</string>
     <string name="fav_movie">Film Favorit</string>
     <string name="fav_show">Acara Favorit</string>
+    <string name="failed_add_fav">Gagal Menambahkan Favorit</string>
+    <string name="succes_add_fav">Sukses Menambahkan Favorit</string>
 </resources>

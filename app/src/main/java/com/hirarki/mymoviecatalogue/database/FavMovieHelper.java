@@ -12,7 +12,7 @@ import com.hirarki.mymoviecatalogue.model.FavMovies;
 import java.util.ArrayList;
 
 import static android.provider.BaseColumns._ID;
-import static com.hirarki.mymoviecatalogue.database.DatabaseContract.FavoriteMovies.ORIGINAL_LANGUAGE;
+
 import static com.hirarki.mymoviecatalogue.database.DatabaseContract.FavoriteMovies.OVERVIEW;
 import static com.hirarki.mymoviecatalogue.database.DatabaseContract.FavoriteMovies.PHOTO;
 import static com.hirarki.mymoviecatalogue.database.DatabaseContract.FavoriteMovies.RELEASE_DATE;
@@ -72,7 +72,6 @@ public class FavMovieHelper {
                 favMovies.setId(cursor.getInt(cursor.getColumnIndexOrThrow(_ID)));
                 favMovies.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(TITLE)));
                 favMovies.setVoteCount(cursor.getString(cursor.getColumnIndexOrThrow(VOTE_COUNT)));
-                favMovies.setOriginalLanguage(cursor.getString(cursor.getColumnIndexOrThrow(ORIGINAL_LANGUAGE)));
                 favMovies.setOverview(cursor.getString(cursor.getColumnIndexOrThrow(OVERVIEW)));
                 favMovies.setReleaseDate(cursor.getString(cursor.getColumnIndexOrThrow(RELEASE_DATE)));
                 favMovies.setPhoto(cursor.getString(cursor.getColumnIndexOrThrow(PHOTO)));
@@ -91,7 +90,6 @@ public class FavMovieHelper {
         ContentValues args = new ContentValues();
         args.put(TITLE, favMovies.getTitle());
         args.put(VOTE_COUNT, favMovies.getVoteCount());
-        args.put(ORIGINAL_LANGUAGE, favMovies.getOriginalLanguage());
         args.put(OVERVIEW, favMovies.getOverview());
         args.put(RELEASE_DATE, favMovies.getReleaseDate());
         args.put(VOTE_AVERAGE, favMovies.getVoteAverage());

@@ -9,7 +9,6 @@ public class DatabaseContract {
 
         static final String TITLE = "title";
         static final String VOTE_COUNT = "vote_count";
-        static final String ORIGINAL_LANGUAGE = "original_language";
         static final String OVERVIEW = "overview";
         static final String RELEASE_DATE = "release_date";
         static final String VOTE_AVERAGE = "vote_average";
@@ -22,7 +21,6 @@ public class DatabaseContract {
 
         static final String TV_TITLE                = "tv_title";
         static final String TV_VOTE_COUNT           = "tv_vote_count";
-        static final String TV_ORIGINAL_LANGUAGE    = "tv_original_language";
         static final String TV_OVERVIEW             = "tv_overview";
         static final String TV_RELEASE_DATE         = "tv_release_date";
         static final String TV_VOTE_AVERAGE         = "tv_vote_average";

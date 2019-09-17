@@ -13,7 +13,6 @@ import java.util.ArrayList;
 
 import static android.provider.BaseColumns._ID;
 import static com.hirarki.mymoviecatalogue.database.DatabaseContract.FavoriteShows.TABLE_NAME_SHOWS;
-import static com.hirarki.mymoviecatalogue.database.DatabaseContract.FavoriteShows.TV_ORIGINAL_LANGUAGE;
 import static com.hirarki.mymoviecatalogue.database.DatabaseContract.FavoriteShows.TV_OVERVIEW;
 import static com.hirarki.mymoviecatalogue.database.DatabaseContract.FavoriteShows.TV_PHOTO;
 import static com.hirarki.mymoviecatalogue.database.DatabaseContract.FavoriteShows.TV_RELEASE_DATE;
@@ -70,7 +69,6 @@ public class FavShowHelper {
                 favShows = new FavShows();
                 favShows.setTvTitle(cursor.getString(cursor.getColumnIndexOrThrow(TV_TITLE)));
                 favShows.setTvVoteCount(cursor.getString(cursor.getColumnIndexOrThrow(TV_VOTE_COUNT)));
-                favShows.setTvOriginalLanguage(cursor.getString(cursor.getColumnIndexOrThrow(TV_ORIGINAL_LANGUAGE)));
                 favShows.setTvOverview(cursor.getString(cursor.getColumnIndexOrThrow(TV_OVERVIEW)));
                 favShows.setTvReleaseDate(cursor.getString(cursor.getColumnIndexOrThrow(TV_RELEASE_DATE)));
                 favShows.setTvPhoto(cursor.getString(cursor.getColumnIndexOrThrow(TV_PHOTO)));
@@ -89,7 +87,6 @@ public class FavShowHelper {
         ContentValues args = new ContentValues();
         args.put(TV_TITLE, favShows.getTvTitle());
         args.put(TV_VOTE_COUNT, favShows.getTvVoteCount());
-        args.put(TV_ORIGINAL_LANGUAGE, favShows.getTvOriginalLanguage());
         args.put(TV_OVERVIEW, favShows.getTvOverview());
         args.put(TV_RELEASE_DATE, favShows.getTvReleaseDate());
         args.put(TV_VOTE_AVERAGE, favShows.getTvVoteAverage());

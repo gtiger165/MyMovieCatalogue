@@ -7,7 +7,6 @@ public class FavShows implements Parcelable {
     private int id;
     private String tvTitle;
     private String tvVoteCount;
-    private String tvOriginalLanguage;
     private String tvOverview;
     private String tvReleaseDate;
     private String tvVoteAverage;
@@ -35,14 +34,6 @@ public class FavShows implements Parcelable {
 
     public void setTvVoteCount(String tvVoteCount) {
         this.tvVoteCount = tvVoteCount;
-    }
-
-    public String getTvOriginalLanguage() {
-        return tvOriginalLanguage;
-    }
-
-    public void setTvOriginalLanguage(String tvOriginalLanguage) {
-        this.tvOriginalLanguage = tvOriginalLanguage;
     }
 
     public String getTvOverview() {
@@ -87,7 +78,6 @@ public class FavShows implements Parcelable {
         dest.writeInt(this.id);
         dest.writeString(this.tvTitle);
         dest.writeString(this.tvVoteCount);
-        dest.writeString(this.tvOriginalLanguage);
         dest.writeString(this.tvOverview);
         dest.writeString(this.tvReleaseDate);
         dest.writeString(this.tvVoteAverage);
@@ -101,7 +91,6 @@ public class FavShows implements Parcelable {
         this.id = in.readInt();
         this.tvTitle = in.readString();
         this.tvVoteCount = in.readString();
-        this.tvOriginalLanguage = in.readString();
         this.tvOverview = in.readString();
         this.tvReleaseDate = in.readString();
         this.tvVoteAverage = in.readString();

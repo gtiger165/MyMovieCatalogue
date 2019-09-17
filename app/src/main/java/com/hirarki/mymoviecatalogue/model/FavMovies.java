@@ -7,7 +7,6 @@ public class FavMovies implements Parcelable {
     private int id;
     private String title;
     private String voteCount;
-    private String originalLanguage;
     private String overview;
     private String releaseDate;
     private String voteAverage;
@@ -35,14 +34,6 @@ public class FavMovies implements Parcelable {
 
     public void setVoteCount(String voteCount) {
         this.voteCount = voteCount;
-    }
-
-    public String getOriginalLanguage() {
-        return originalLanguage;
-    }
-
-    public void setOriginalLanguage(String originalLanguage) {
-        this.originalLanguage = originalLanguage;
     }
 
     public String getOverview() {
@@ -87,7 +78,6 @@ public class FavMovies implements Parcelable {
         dest.writeInt(this.id);
         dest.writeString(this.title);
         dest.writeString(this.voteCount);
-        dest.writeString(this.originalLanguage);
         dest.writeString(this.overview);
         dest.writeString(this.releaseDate);
         dest.writeString(this.voteAverage);
@@ -101,7 +91,6 @@ public class FavMovies implements Parcelable {
         this.id = in.readInt();
         this.title = in.readString();
         this.voteCount = in.readString();
-        this.originalLanguage = in.readString();
         this.overview = in.readString();
         this.releaseDate = in.readString();
         this.voteAverage = in.readString();

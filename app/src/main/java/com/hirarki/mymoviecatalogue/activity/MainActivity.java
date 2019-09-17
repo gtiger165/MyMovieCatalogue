@@ -92,8 +92,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.fab_movie:
+                Intent favMovie = new Intent(MainActivity.this, FavMovieActivity.class);
+                startActivity(favMovie);
+                fam.close(true);
                 break;
             case R.id.fab_show:
+                Intent favShows = new Intent(MainActivity.this, FavShowsActivity.class);
+                startActivity(favShows);
+                fam.close(true);
                 break;
         }
     }

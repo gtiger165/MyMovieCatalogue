@@ -13,4 +13,6 @@
     <string name="fav_movie">Favorite Movie</string>
     <string name="fam_fav_list">Favorite List</string>
     <string name="fav_show">Favorite Show</string>
+    <string name="succes_add_fav">Added to Favorite</string>
+    <string name="failed_add_fav">Added to Favorite Failed</string>
 </resources>
