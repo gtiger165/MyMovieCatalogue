@@ -43,7 +43,7 @@ public class FavMovieActivity extends AppCompatActivity implements LoadFavCallba
     }
 
     private void prepare() {
-        getSupportActionBar().setTitle("Favorite Movie List");
+        getSupportActionBar().setTitle(getString(R.string.fav_movie_title));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         rvFavMov = findViewById(R.id.rv_fav_mov);

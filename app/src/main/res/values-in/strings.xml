@@ -16,4 +16,17 @@
     <string name="fav_show">Acara Favorit</string>
     <string name="failed_add_fav">Gagal Menambahkan Favorit</string>
     <string name="succes_add_fav">Sukses Menambahkan Favorit</string>
+    <string name="add_to_favorite">Menambahkan ke Favorit</string>
+    <string name="failed_remove">Gagal menghapus favorit</string>
+    <string name="fav_mov_detail">Detail Film Favorit</string>
+    <string name="fav_movie_title">Daftar Film Favorit</string>
+    <string name="fav_shows_detail">Detail Acara TV</string>
+    <string name="fav_shows_title">Daftar Acara Favorit</string>
+    <string name="mov_detail">Detail Film</string>
+    <string name="remove_favorite">Hapus Favorite</string>
+    <string name="shows_detail">Detail Acara TV</string>
+    <string name="success_remove">Sukses menghapus favorit</string>
+    <string name="dialod_remove_mov">Hapus Film Favorit</string>
+    <string name="dialog_remove_shows">Hapus Acara Favorit</string>
+    <string name="remove_message">Yakin ingin menghapus ini dari favorit anda ?</string>
 </resources>

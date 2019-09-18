@@ -41,7 +41,7 @@ public class FavShowsActivity extends AppCompatActivity implements LoadFavCallba
     }
 
     private void prepare() {
-        getSupportActionBar().setTitle("Favorite Shows List");
+        getSupportActionBar().setTitle(getString(R.string.fav_shows_title));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         rvFavShows = findViewById(R.id.rv_fav_shows);

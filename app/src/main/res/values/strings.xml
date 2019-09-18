@@ -15,4 +15,17 @@
     <string name="fav_show">Favorite Show</string>
     <string name="succes_add_fav">Added to Favorite</string>
     <string name="failed_add_fav">Added to Favorite Failed</string>
+    <string name="fav_movie_title">Favorite Movie List</string>
+    <string name="fav_shows_title">Favorite Shows List</string>
+    <string name="mov_detail">Movie Detail</string>
+    <string name="fav_mov_detail">Favorite Movie Detail</string>
+    <string name="shows_detail">TV Show Detail</string>
+    <string name="fav_shows_detail">Favorite Show Detail</string>
+    <string name="success_remove">Success remove favorite</string>
+    <string name="failed_remove">Failed to remove favorite</string>
+    <string name="add_to_favorite">Add To Favorite</string>
+    <string name="remove_favorite">Remove Favorite</string>
+    <string name="dialod_remove_mov">Remove Favorite Movie</string>
+    <string name="dialog_remove_shows">Remove Favorite TV Shows</string>
+    <string name="remove_message">Are you sure want to remove this from your favorite ?</string>
 </resources>

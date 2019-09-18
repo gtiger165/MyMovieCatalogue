@@ -98,7 +98,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         layoutDetail.setVisibility(View.GONE);
 
         if (getIntent().getStringExtra("cek_data").equals("movie")) {
-            getSupportActionBar().setTitle("Movie Detail");
+            getSupportActionBar().setTitle(getString(R.string.mov_detail));
 
             Movie movie = getIntent().getParcelableExtra(EXTRA_MOVIE);
 
@@ -115,7 +115,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         }
 
         if (getIntent().getStringExtra("cek_data").equals("fav_movie")) {
-            getSupportActionBar().setTitle("Favorite Movie Detail");
+            getSupportActionBar().setTitle(getString(R.string.fav_mov_detail));
 
             FavMovies mfavMovies = getIntent().getParcelableExtra(EXTRA_MOVIE_FAVORITE);
 
@@ -172,7 +172,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         layoutDetail.setVisibility(View.GONE);
 
         if (getIntent().getStringExtra("cek_data").equals("tv_show")) {
-            getSupportActionBar().setTitle("TV Show Detail");
+            getSupportActionBar().setTitle(getString(R.string.shows_detail));
 
             TvShow tvShow = getIntent().getParcelableExtra(EXTRA_SHOW);
 
@@ -189,7 +189,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         }
 
         if (getIntent().getStringExtra("cek_data").equals("fav_shows")) {
-            getSupportActionBar().setTitle("Favorite Show Detail");
+            getSupportActionBar().setTitle(getString(R.string.fav_shows_detail));
 
             FavShows mFavShow = getIntent().getParcelableExtra(EXTRA_SHOWS_FAVORITE);
 
@@ -281,7 +281,6 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         }
         if (view.getId() == R.id.btn_fav_remove) {
             removeDialog();
-//            Toast.makeText(this, "Test Delete", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -289,7 +288,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         if (getIntent().getStringExtra("cek_data").equals("fav_movie")) {
-            builder.setTitle("Remove Favorite Movie");
+            builder.setTitle(getString(R.string.dialod_remove_mov));
             builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -299,16 +298,18 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
                         mIntent.putExtra(EXTRA_POSITION, position);
                         setResult(RESULT_DELETE, mIntent);
                         finish();
-                        Toast.makeText(DetailActivity.this, "Success remove favorite", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DetailActivity.this,
+                                getApplicationContext().getString(R.string.success_remove), Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(DetailActivity.this, "Failed to remove favorite", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DetailActivity.this,
+                                getApplicationContext().getString(R.string.failed_remove), Toast.LENGTH_SHORT).show();
                     }
                 }
             });
         }
 
         if (getIntent().getStringExtra("cek_data").equals("fav_shows")) {
-            builder.setTitle("Remove Favorite TV Shows");
+            builder.setTitle(getString(R.string.dialog_remove_shows));
             builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -319,15 +320,17 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
                         mIntent.putExtra(EXTRA_POSITION, position);
                         setResult(RESULT_DELETE, mIntent);
                         finish();
-                        Toast.makeText(DetailActivity.this, "Success remove favorite", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DetailActivity.this,
+                                getApplicationContext().getString(R.string.success_remove), Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(DetailActivity.this, "Failed to remove favorite", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DetailActivity.this,
+                                getApplicationContext().getString(R.string.failed_remove), Toast.LENGTH_SHORT).show();
                     }
                 }
             });
         }
 
-        builder.setMessage("Are you sure want to remove this from your favorite ?");
+        builder.setMessage(getString(R.string.remove_message));
         builder.setCancelable(false);
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
