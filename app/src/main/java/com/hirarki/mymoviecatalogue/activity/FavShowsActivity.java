@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import com.hirarki.mymoviecatalogue.R;
 import com.hirarki.mymoviecatalogue.adapter.FavShowsAdapter;
@@ -18,6 +19,10 @@ import com.hirarki.mymoviecatalogue.model.FavShows;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+
+import static com.hirarki.mymoviecatalogue.activity.DetailActivity.EXTRA_POSITION;
+import static com.hirarki.mymoviecatalogue.activity.DetailActivity.REQUEST_UPDATE;
+import static com.hirarki.mymoviecatalogue.activity.DetailActivity.RESULT_DELETE;
 
 public class FavShowsActivity extends AppCompatActivity implements LoadFavCallback{
     RecyclerView rvFavShows;
@@ -60,7 +65,8 @@ public class FavShowsActivity extends AppCompatActivity implements LoadFavCallba
         swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-
+                swipe.setRefreshing(false);
+                onActivityResult(REQUEST_UPDATE, RESULT_DELETE, getIntent());
             }
         });
 
@@ -129,7 +135,15 @@ public class FavShowsActivity extends AppCompatActivity implements LoadFavCallba
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        if (data != null) {
+            if (requestCode == REQUEST_UPDATE) {
+                if (resultCode == RESULT_DELETE) {
+                    int position = data.getIntExtra(EXTRA_POSITION, 0);
 
+                    adapter.removeFav(position);
+                }
+            }
+        }
     }
 
     @Override

@@ -1,10 +1,13 @@
 package com.hirarki.mymoviecatalogue.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -27,6 +30,8 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     public static final String EXTRA_MOVIE_FAVORITE = "extra_movie_favorite";
     public static final String EXTRA_SHOWS_FAVORITE = "extra_shows_favorite";
     public static final String EXTRA_POSITION = "extra_position";
+    public static final int REQUEST_UPDATE = 200;
+    public static final int RESULT_DELETE = 301;
 
     private String url_image = "https://image.tmdb.org/t/p/w185";
     private String imgMovie, imgShow;
@@ -275,7 +280,63 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
 
         }
         if (view.getId() == R.id.btn_fav_remove) {
-            Toast.makeText(this, "Test Delete", Toast.LENGTH_SHORT).show();
+            removeDialog();
+//            Toast.makeText(this, "Test Delete", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void removeDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        if (getIntent().getStringExtra("cek_data").equals("fav_movie")) {
+            builder.setTitle("Remove Favorite Movie");
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    long result = movieHelper.deleteFavMovie(favMovies.getId());
+                    if (result > 0) {
+                        Intent mIntent = new Intent();
+                        mIntent.putExtra(EXTRA_POSITION, position);
+                        setResult(RESULT_DELETE, mIntent);
+                        finish();
+                        Toast.makeText(DetailActivity.this, "Success remove favorite", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(DetailActivity.this, "Failed to remove favorite", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+
+        if (getIntent().getStringExtra("cek_data").equals("fav_shows")) {
+            builder.setTitle("Remove Favorite TV Shows");
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    long result = showsHelper.deleteTv(favShows.getId());
+
+                    if (result > 0) {
+                        Intent mIntent = new Intent();
+                        mIntent.putExtra(EXTRA_POSITION, position);
+                        setResult(RESULT_DELETE, mIntent);
+                        finish();
+                        Toast.makeText(DetailActivity.this, "Success remove favorite", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(DetailActivity.this, "Failed to remove favorite", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+
+        builder.setMessage("Are you sure want to remove this from your favorite ?");
+        builder.setCancelable(false);
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

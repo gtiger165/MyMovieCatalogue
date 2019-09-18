@@ -37,15 +37,9 @@ public class FavShowsAdapter extends RecyclerView.Adapter<FavShowsAdapter.FavSho
         notifyDataSetChanged();
     }
 
-    public void addFav(FavShows favShows) {
-        this.favList.add(favShows);
-        notifyItemInserted(favList.size() - 1);
-    }
-
     public void removeFav(int position) {
         this.favList.remove(position);
-        notifyItemRemoved(position);
-        notifyItemRangeChanged(position, favList.size());
+        notifyDataSetChanged();
     }
 
     @NonNull

@@ -67,6 +67,7 @@ public class FavShowHelper {
         if (cursor.getCount() > 0) {
             do {
                 favShows = new FavShows();
+                favShows.setId(cursor.getInt(cursor.getColumnIndexOrThrow(_ID)));
                 favShows.setTvTitle(cursor.getString(cursor.getColumnIndexOrThrow(TV_TITLE)));
                 favShows.setTvVoteCount(cursor.getString(cursor.getColumnIndexOrThrow(TV_VOTE_COUNT)));
                 favShows.setTvOverview(cursor.getString(cursor.getColumnIndexOrThrow(TV_OVERVIEW)));

@@ -8,6 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.hirarki.mymoviecatalogue.R;
 import com.hirarki.mymoviecatalogue.adapter.FavMovieAdapter;
@@ -18,6 +21,10 @@ import com.hirarki.mymoviecatalogue.model.FavShows;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+
+import static com.hirarki.mymoviecatalogue.activity.DetailActivity.EXTRA_POSITION;
+import static com.hirarki.mymoviecatalogue.activity.DetailActivity.REQUEST_UPDATE;
+import static com.hirarki.mymoviecatalogue.activity.DetailActivity.RESULT_DELETE;
 
 public class FavMovieActivity extends AppCompatActivity implements LoadFavCallback{
     RecyclerView rvFavMov;
@@ -53,14 +60,15 @@ public class FavMovieActivity extends AppCompatActivity implements LoadFavCallba
         return super.onSupportNavigateUp();
     }
 
-    private void showFavList(Bundle savedInstance) {
+    private void showFavList(final Bundle savedInstance) {
         movieHelper = FavMovieHelper.getInstance(getApplicationContext());
         movieHelper.open();
 
         swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-
+                swipe.setRefreshing(false);
+                onActivityResult(REQUEST_UPDATE, RESULT_DELETE, getIntent());
             }
         });
 
@@ -129,7 +137,13 @@ public class FavMovieActivity extends AppCompatActivity implements LoadFavCallba
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (data != null) {
+            if (requestCode == REQUEST_UPDATE) {
+                if (resultCode == RESULT_DELETE) {
+                    int position = data.getIntExtra(EXTRA_POSITION, 0);
 
+                    adapter.removeFav(position);
+                }
+            }
         }
     }
 

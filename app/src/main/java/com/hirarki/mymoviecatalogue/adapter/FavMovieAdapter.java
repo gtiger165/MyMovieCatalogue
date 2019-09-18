@@ -37,15 +37,9 @@ public class FavMovieAdapter extends RecyclerView.Adapter<FavMovieAdapter.FavMov
         notifyDataSetChanged();
     }
 
-    public void addFav(FavMovies favMovies) {
-        this.favList.add(favMovies);
-        notifyItemInserted(favList.size() - 1);
-    }
-
     public void removeFav(int position) {
         this.favList.remove(position);
-        notifyItemRemoved(position);
-        notifyItemRangeChanged(position, favList.size());
+        notifyDataSetChanged();
     }
 
     @NonNull
