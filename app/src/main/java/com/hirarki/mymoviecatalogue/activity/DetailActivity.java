@@ -294,10 +294,9 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
                 public void onClick(DialogInterface dialogInterface, int i) {
                     long result = movieHelper.deleteFavMovie(favMovies.getId());
                     if (result > 0) {
-                        Intent mIntent = new Intent();
+                        Intent mIntent = new Intent(DetailActivity.this, FavMovieActivity.class);
                         mIntent.putExtra(EXTRA_POSITION, position);
-                        setResult(RESULT_DELETE, mIntent);
-                        finish();
+                        startActivityForResult(mIntent, RESULT_DELETE);
                         Toast.makeText(DetailActivity.this,
                                 getApplicationContext().getString(R.string.success_remove), Toast.LENGTH_SHORT).show();
                     } else {
@@ -316,10 +315,9 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
                     long result = showsHelper.deleteTv(favShows.getId());
 
                     if (result > 0) {
-                        Intent mIntent = new Intent();
+                        Intent mIntent = new Intent(DetailActivity.this, FavShowsActivity.class);
                         mIntent.putExtra(EXTRA_POSITION, position);
-                        setResult(RESULT_DELETE, mIntent);
-                        finish();
+                        startActivityForResult(mIntent, RESULT_DELETE);
                         Toast.makeText(DetailActivity.this,
                                 getApplicationContext().getString(R.string.success_remove), Toast.LENGTH_SHORT).show();
                     } else {

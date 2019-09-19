@@ -24,7 +24,7 @@ import static com.hirarki.mymoviecatalogue.activity.DetailActivity.EXTRA_POSITIO
 import static com.hirarki.mymoviecatalogue.activity.DetailActivity.REQUEST_UPDATE;
 import static com.hirarki.mymoviecatalogue.activity.DetailActivity.RESULT_DELETE;
 
-public class FavShowsActivity extends AppCompatActivity implements LoadFavCallback{
+public class FavShowsActivity extends AppCompatActivity implements LoadFavCallback, SwipeRefreshLayout.OnRefreshListener {
     RecyclerView rvFavShows;
     SwipeRefreshLayout swipe;
     private FavShowsAdapter adapter;
@@ -58,17 +58,11 @@ public class FavShowsActivity extends AppCompatActivity implements LoadFavCallba
         return super.onSupportNavigateUp();
     }
 
-    private void showFavList(Bundle savedInstance) {
+    private void showFavList(final Bundle savedInstance) {
         showsHelper = FavShowHelper.getInstance(getApplicationContext());
         showsHelper.open();
 
-        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                swipe.setRefreshing(false);
-                onActivityResult(REQUEST_UPDATE, RESULT_DELETE, getIntent());
-            }
-        });
+        swipe.setOnRefreshListener(this);
 
         rvFavShows.setAdapter(adapter);
 
@@ -102,6 +96,11 @@ public class FavShowsActivity extends AppCompatActivity implements LoadFavCallba
     public void postExecuteShows(ArrayList<FavShows> favoriteShows) {
         swipe.setRefreshing(false);
         adapter.setFavList(favoriteShows);
+    }
+
+    @Override
+    public void onRefresh() {
+
     }
 
     private static class FavShowsAsync extends AsyncTask<Void, Void, ArrayList<FavShows>> {
