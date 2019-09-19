@@ -102,7 +102,8 @@ public class FavMovieActivity extends AppCompatActivity implements LoadFavCallba
 
     @Override
     public void onRefresh() {
-
+        adapter.notifyDataSetChanged();
+        swipe.setRefreshing(false);
     }
 
     private static class FavMovAsync extends AsyncTask<Void, Void, ArrayList<FavMovies>> {

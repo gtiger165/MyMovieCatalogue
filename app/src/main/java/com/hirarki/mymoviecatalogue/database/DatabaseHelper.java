@@ -5,7 +5,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
 
+import static com.hirarki.mymoviecatalogue.database.DatabaseContract.FavoriteMovies.ID_MOVIE;
 import static com.hirarki.mymoviecatalogue.database.DatabaseContract.FavoriteMovies.TABLE_NAME_MOVIE;
+import static com.hirarki.mymoviecatalogue.database.DatabaseContract.FavoriteShows.ID_SHOWS;
 import static com.hirarki.mymoviecatalogue.database.DatabaseContract.FavoriteShows.TABLE_NAME_SHOWS;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -15,6 +17,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String SQL_CREATE_TABLE_MOVIE_FAVORITE = String.format("CREATE TABLE %s"
                     + " (%s INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    " %s INTEGER NOT NULL UNIQUE," +
                     " %s TEXT NOT NULL," +
                     " %s TEXT NOT NULL," +
                     " %s TEXT NOT NULL," +
@@ -23,6 +26,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     " %s TEXT NOT NULL)",
             TABLE_NAME_MOVIE,
             DatabaseContract.FavoriteMovies._ID,
+            ID_MOVIE,
             DatabaseContract.FavoriteMovies.TITLE,
             DatabaseContract.FavoriteMovies.VOTE_COUNT,
             DatabaseContract.FavoriteMovies.OVERVIEW,
@@ -33,6 +37,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String SQL_CREATE_TABLE_TV_SHOW_FAVORITE = String.format("CREATE TABLE %s"
                     + " (%s INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    " %s INTEGER NOT NULL UNIQUE," +
                     " %s TEXT NOT NULL," +
                     " %s TEXT NOT NULL," +
                     " %s TEXT NOT NULL," +
@@ -41,6 +46,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     " %s TEXT NOT NULL)",
             TABLE_NAME_SHOWS,
             DatabaseContract.FavoriteShows._ID,
+            ID_SHOWS,
             DatabaseContract.FavoriteShows.TV_TITLE,
             DatabaseContract.FavoriteShows.TV_VOTE_COUNT,
             DatabaseContract.FavoriteShows.TV_OVERVIEW,

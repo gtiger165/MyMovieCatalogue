@@ -100,7 +100,8 @@ public class FavShowsActivity extends AppCompatActivity implements LoadFavCallba
 
     @Override
     public void onRefresh() {
-
+        adapter.notifyDataSetChanged();
+        swipe.setRefreshing(false);
     }
 
     private static class FavShowsAsync extends AsyncTask<Void, Void, ArrayList<FavShows>> {

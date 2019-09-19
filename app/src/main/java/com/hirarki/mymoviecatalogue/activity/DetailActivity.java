@@ -43,6 +43,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     private FavMovieHelper movieHelper;
     private FavShowHelper showsHelper;
     private int position;
+    private int idPrimary;
 
     TextView tvTitle, tvDate, tvVoteCount, tvRating, tvOverview;
     ImageView imgPoster;
@@ -103,6 +104,8 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
             Movie movie = getIntent().getParcelableExtra(EXTRA_MOVIE);
 
             imgMovie = url_image + movie.getPosterPath();
+            idPrimary = movie.getId();
+            Log.d("testId", "id : " + idPrimary);
 
             tvTitle.setText(movie.getTitle());
             tvRating.setText(String.valueOf(movie.getVoteAverage()));
@@ -177,6 +180,8 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
             TvShow tvShow = getIntent().getParcelableExtra(EXTRA_SHOW);
 
             imgShow = url_image + tvShow.getPosterPath();
+            idPrimary = tvShow.getId();
+            Log.d("testId", "id : " + idPrimary);
 
             tvTitle.setText(tvShow.getName());
             tvRating.setText(String.valueOf(tvShow.getVoteAverage()));
@@ -207,13 +212,15 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
 
         layoutDetail.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
+
     }
 
     @Override
     public void onClick(View view) {
-        String title        = tvTitle.getText().toString().trim();
-        String voteCount   = tvVoteCount.getText().toString().trim();
-        String overview     = tvOverview.getText().toString().trim();
+        int idFav = idPrimary;
+        String title = tvTitle.getText().toString().trim();
+        String voteCount = tvVoteCount.getText().toString().trim();
+        String overview = tvOverview.getText().toString().trim();
         String releaseDate = tvDate.getText().toString().trim();
 
         String voteAverage = tvRating.getText().toString().trim();
@@ -222,6 +229,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
             if (getIntent().getStringExtra("cek_data").equals("movie")) {
                 String imagePath = imgMovie;
 
+                favMovies.setIdMovie(idFav);
                 favMovies.setTitle(title);
                 favMovies.setVoteCount(voteCount);
                 favMovies.setOverview(overview);
@@ -250,6 +258,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
             if (getIntent().getStringExtra("cek_data").equals("tv_show")){
                 String imagePath = imgShow;
 
+                favShows.setIdShows(idFav);
                 favShows.setTvTitle(title);
                 favShows.setTvVoteCount(voteCount);
                 favShows.setTvOverview(overview);
@@ -318,6 +327,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
                         Intent mIntent = new Intent(DetailActivity.this, FavShowsActivity.class);
                         mIntent.putExtra(EXTRA_POSITION, position);
                         startActivityForResult(mIntent, RESULT_DELETE);
+                        finish();
                         Toast.makeText(DetailActivity.this,
                                 getApplicationContext().getString(R.string.success_remove), Toast.LENGTH_SHORT).show();
                     } else {

@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import static android.provider.BaseColumns._ID;
 
+import static com.hirarki.mymoviecatalogue.database.DatabaseContract.FavoriteMovies.ID_MOVIE;
 import static com.hirarki.mymoviecatalogue.database.DatabaseContract.FavoriteMovies.OVERVIEW;
 import static com.hirarki.mymoviecatalogue.database.DatabaseContract.FavoriteMovies.PHOTO;
 import static com.hirarki.mymoviecatalogue.database.DatabaseContract.FavoriteMovies.RELEASE_DATE;
@@ -70,6 +71,7 @@ public class FavMovieHelper {
             do {
                 favMovies = new FavMovies();
                 favMovies.setId(cursor.getInt(cursor.getColumnIndexOrThrow(_ID)));
+                favMovies.setIdMovie(cursor.getInt(cursor.getColumnIndexOrThrow(ID_MOVIE)));
                 favMovies.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(TITLE)));
                 favMovies.setVoteCount(cursor.getString(cursor.getColumnIndexOrThrow(VOTE_COUNT)));
                 favMovies.setOverview(cursor.getString(cursor.getColumnIndexOrThrow(OVERVIEW)));
@@ -88,6 +90,7 @@ public class FavMovieHelper {
 
     public long insertFavMovie(FavMovies favMovies) {
         ContentValues args = new ContentValues();
+        args.put(ID_MOVIE, favMovies.getIdMovie());
         args.put(TITLE, favMovies.getTitle());
         args.put(VOTE_COUNT, favMovies.getVoteCount());
         args.put(OVERVIEW, favMovies.getOverview());

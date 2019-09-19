@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 public class FavShows implements Parcelable {
     private int id;
+    private int idShows;
     private String tvTitle;
     private String tvVoteCount;
     private String tvOverview;
@@ -18,6 +19,14 @@ public class FavShows implements Parcelable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getIdShows() {
+        return idShows;
+    }
+
+    public void setIdShows(int idShows) {
+        this.idShows = idShows;
     }
 
     public String getTvTitle() {
@@ -76,6 +85,7 @@ public class FavShows implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.id);
+        dest.writeInt(this.idShows);
         dest.writeString(this.tvTitle);
         dest.writeString(this.tvVoteCount);
         dest.writeString(this.tvOverview);
@@ -89,6 +99,7 @@ public class FavShows implements Parcelable {
 
     protected FavShows(Parcel in) {
         this.id = in.readInt();
+        this.idShows = in.readInt();
         this.tvTitle = in.readString();
         this.tvVoteCount = in.readString();
         this.tvOverview = in.readString();

@@ -12,6 +12,7 @@ import com.hirarki.mymoviecatalogue.model.FavShows;
 import java.util.ArrayList;
 
 import static android.provider.BaseColumns._ID;
+import static com.hirarki.mymoviecatalogue.database.DatabaseContract.FavoriteShows.ID_SHOWS;
 import static com.hirarki.mymoviecatalogue.database.DatabaseContract.FavoriteShows.TABLE_NAME_SHOWS;
 import static com.hirarki.mymoviecatalogue.database.DatabaseContract.FavoriteShows.TV_OVERVIEW;
 import static com.hirarki.mymoviecatalogue.database.DatabaseContract.FavoriteShows.TV_PHOTO;
@@ -68,6 +69,7 @@ public class FavShowHelper {
             do {
                 favShows = new FavShows();
                 favShows.setId(cursor.getInt(cursor.getColumnIndexOrThrow(_ID)));
+                favShows.setIdShows(cursor.getInt(cursor.getColumnIndexOrThrow(ID_SHOWS)));
                 favShows.setTvTitle(cursor.getString(cursor.getColumnIndexOrThrow(TV_TITLE)));
                 favShows.setTvVoteCount(cursor.getString(cursor.getColumnIndexOrThrow(TV_VOTE_COUNT)));
                 favShows.setTvOverview(cursor.getString(cursor.getColumnIndexOrThrow(TV_OVERVIEW)));
@@ -86,6 +88,7 @@ public class FavShowHelper {
 
     public long insertTv(FavShows favShows) {
         ContentValues args = new ContentValues();
+        args.put(ID_SHOWS, favShows.getIdShows());
         args.put(TV_TITLE, favShows.getTvTitle());
         args.put(TV_VOTE_COUNT, favShows.getTvVoteCount());
         args.put(TV_OVERVIEW, favShows.getTvOverview());

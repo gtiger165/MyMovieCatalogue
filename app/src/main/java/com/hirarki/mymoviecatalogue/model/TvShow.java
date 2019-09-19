@@ -10,6 +10,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class TvShow implements Parcelable {
+    @SerializedName("id")
+    private int id;
     @SerializedName("name")
     private String name;
     @SerializedName("overview")
@@ -36,6 +38,14 @@ public class TvShow implements Parcelable {
         this.voteAverage = voteAverage;
         this.voteCount = voteCount;
         this.popularity = popularity;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -109,6 +119,7 @@ public class TvShow implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
         dest.writeString(this.name);
         dest.writeString(this.overview);
         dest.writeString(this.posterPath);
@@ -120,6 +131,7 @@ public class TvShow implements Parcelable {
     }
 
     protected TvShow(Parcel in) {
+        this.id = in.readInt();
         this.name = in.readString();
         this.overview = in.readString();
         this.posterPath = in.readString();
@@ -130,7 +142,7 @@ public class TvShow implements Parcelable {
         this.popularity = (Double) in.readValue(Double.class.getClassLoader());
     }
 
-    public static final Parcelable.Creator<TvShow> CREATOR = new Parcelable.Creator<TvShow>() {
+    public static final Creator<TvShow> CREATOR = new Creator<TvShow>() {
         @Override
         public TvShow createFromParcel(Parcel source) {
             return new TvShow(source);
