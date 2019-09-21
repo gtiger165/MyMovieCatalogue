@@ -306,6 +306,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
                         Intent mIntent = new Intent(DetailActivity.this, FavMovieActivity.class);
                         mIntent.putExtra(EXTRA_POSITION, position);
                         startActivityForResult(mIntent, RESULT_DELETE);
+                        finish();
                         Toast.makeText(DetailActivity.this,
                                 getApplicationContext().getString(R.string.success_remove), Toast.LENGTH_SHORT).show();
                     } else {
