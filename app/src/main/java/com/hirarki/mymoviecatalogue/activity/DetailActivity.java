@@ -4,9 +4,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +26,8 @@ import com.hirarki.mymoviecatalogue.model.FavMovies;
 import com.hirarki.mymoviecatalogue.model.FavShows;
 import com.hirarki.mymoviecatalogue.model.Movie;
 import com.hirarki.mymoviecatalogue.model.TvShow;
+
+import java.util.Objects;
 
 public class DetailActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String EXTRA_MOVIE = "extra_movie";
@@ -69,8 +74,36 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
+    private void prepareToolBar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.collapsing_toolbar);
+        switch (getIntent().getStringExtra("cek_data")) {
+            case "movie":
+                collapsingToolbarLayout.setTitle(getString(R.string.mov_detail));
+                break;
+            case "fav_movie":
+                collapsingToolbarLayout.setTitle(getString(R.string.fav_mov_detail));
+                break;
+            case "tv_show":
+                collapsingToolbarLayout.setTitle(getString(R.string.shows_detail));
+                break;
+            case "fav_shows":
+                collapsingToolbarLayout.setTitle(getString(R.string.fav_shows_detail));
+                break;
+        }
+
+        collapsingToolbarLayout.setCollapsedTitleTextColor(
+                ContextCompat.getColor(this, R.color.colorLight));
+        collapsingToolbarLayout.setExpandedTitleColor(
+                ContextCompat.getColor(this, R.color.colorLight));
+    }
+
     private void prepare() {
-        tvTitle = findViewById(R.id.tv_judul);
+        prepareToolBar();
+
+        tvTitle = findViewById(R.id.tv_detail);
         tvDate = findViewById(R.id.tv_tanggal);
         tvVoteCount = findViewById(R.id.tv_vote_count);
         tvRating = findViewById(R.id.tv_rating);
@@ -84,7 +117,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         btnAddFav.setOnClickListener(this);
         btnRemoveFav.setOnClickListener(this);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
