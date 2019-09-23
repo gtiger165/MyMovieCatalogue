@@ -1,5 +1,7 @@
 package com.hirarki.mymoviecatalogue.activity;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -7,6 +9,9 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,12 +20,18 @@ import android.widget.TextView;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.hirarki.mymoviecatalogue.R;
+import com.hirarki.mymoviecatalogue.SearchActivity;
 import com.hirarki.mymoviecatalogue.fragment.MovieFragment;
 import com.hirarki.mymoviecatalogue.fragment.TvShowFragment;
+
+import static com.hirarki.mymoviecatalogue.SearchActivity.EXTRA_QUERY;
+import static com.hirarki.mymoviecatalogue.SearchActivity.EXTRA_TYPE;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     FloatingActionMenu fam;
     FloatingActionButton fabMovie, fabShow;
+    SearchView searchView;
+    private String searchedType;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -31,16 +42,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             switch (item.getItemId()) {
                 case R.id.navigation_movie:
                     getSupportActionBar().setTitle(getResources().getString(R.string.actionbar_movie));
+                    searchedType = "movie";
                     fragment = new MovieFragment();
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.container_layout, fragment, fragment.getClass().getSimpleName())
+                            .addToBackStack(null)
                             .commit();
                     return true;
                 case R.id.navigation_tv_show:
                     getSupportActionBar().setTitle(getResources().getString(R.string.actionbar_tv_show));
+                    searchedType = "tv_show";
                     fragment = new TvShowFragment();
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.container_layout, fragment, fragment.getClass().getSimpleName())
+                            .addToBackStack(null)
                             .commit();
                     return true;
             }
@@ -52,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         BottomNavigationView navView = findViewById(R.id.nav_view);
 
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -76,6 +92,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_language, menu);
+
+        SearchManager manager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView.setSearchableInfo(manager.getSearchableInfo(getComponentName()));
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                Intent searchIntent = new Intent(MainActivity.this,
+                        SearchActivity.class);
+                searchIntent.putExtra(EXTRA_QUERY, s);
+                searchIntent.putExtra(EXTRA_TYPE, searchedType);
+
+                startActivity(searchIntent);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -84,6 +123,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (item.getItemId() == R.id.action_change_language) {
             Intent mIntent = new Intent(Settings.ACTION_LOCALE_SETTINGS);
             startActivity(mIntent);
+        }
+        if (item.getItemId() == R.id.action_search) {
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

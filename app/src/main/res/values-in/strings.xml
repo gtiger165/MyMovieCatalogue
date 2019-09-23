@@ -29,4 +29,8 @@
     <string name="dialod_remove_mov">Hapus Film Favorit</string>
     <string name="dialog_remove_shows">Hapus Acara Favorit</string>
     <string name="remove_message">Yakin ingin menghapus ini dari favorit anda ?</string>
+    <string name="action_search">Cari</string>
+    <string name="search_hint">Ketikkan Judul</string>
+    <string name="search_result_movie">Hasil Pencarian Film</string>
+    <string name="search_result_show">Hasil Pencarian Acara</string>
 </resources>

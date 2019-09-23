@@ -1,21 +1,28 @@
 package com.hirarki.mymoviecatalogue.fragment;
 
+import android.app.SearchManager;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.hirarki.mymoviecatalogue.R;
 import com.hirarki.mymoviecatalogue.adapter.MovieAdapter;
+import com.hirarki.mymoviecatalogue.helper.OnBackPressed;
 import com.hirarki.mymoviecatalogue.model.Movie;
 import com.hirarki.mymoviecatalogue.model.MovieList;
 import com.hirarki.mymoviecatalogue.viewModel.MovieViewModel;
@@ -24,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MovieFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class MovieFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
     private MovieAdapter adapter;
     private MovieViewModel movieViewModel;
     private RecyclerView rv;
@@ -51,6 +58,12 @@ public class MovieFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         swipe.setOnRefreshListener(this);
 
         return view;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     private Observer<MovieList> getMovie = new Observer<MovieList>() {

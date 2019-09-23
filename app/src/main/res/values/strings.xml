@@ -28,4 +28,8 @@
     <string name="dialod_remove_mov">Remove Favorite Movie</string>
     <string name="dialog_remove_shows">Remove Favorite TV Shows</string>
     <string name="remove_message">Are you sure want to remove this from your favorite ?</string>
+    <string name="action_search">Search</string>
+    <string name="search_hint">Type title</string>
+    <string name="search_result_movie">Movie Search Result</string>
+    <string name="search_result_show">Tv Show Search Result</string>
 </resources>

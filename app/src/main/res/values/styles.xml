@@ -8,6 +8,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
     <style name="DetailTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -18,5 +23,8 @@
     <style name="ToolbarColoredBackArrow" parent="DetailTheme">
         <item name="android:textColorSecondary">#fff</item>
     </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="Theme.AppCompat.Light.DarkActionBar"/>
+    <style name="AppTheme.PopUpOverlay" parent="Theme.AppCompat.Light"/>
 
 </resources>

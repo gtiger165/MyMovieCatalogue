@@ -18,4 +18,12 @@ public interface ApiService {
 
     @GET("tv")
     Call<TvShowList> getShowList(@Query("api_key") String apiKey);
+
+    @GET("movie")
+    Call<MovieList> searchMovies(@Query("api_key") String apiKey,
+                             @Query("query") String query);
+
+    @GET("tv")
+    Call<TvShowList> searchShows(@Query("api_key") String apiKey,
+                            @Query("query") String query);
 }

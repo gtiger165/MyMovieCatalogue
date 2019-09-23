@@ -4,10 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,15 +17,18 @@ import com.hirarki.mymoviecatalogue.R;
 import com.hirarki.mymoviecatalogue.activity.DetailActivity;
 import com.hirarki.mymoviecatalogue.model.Movie;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
     private Context context;
-    private List<Movie> movieList;
+    private List<Movie> movieList = new ArrayList<>();
 
     public MovieAdapter(Context context, List<Movie> movieList) {
         this.context = context;
-        this.movieList = movieList;
+        this.movieList.clear();
+        this.movieList.addAll(movieList);
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -72,7 +76,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
             Glide.with(itemView.getContext())
                     .load(url_image)
-                    .into(imgPoster);
+                .into(imgPoster);
         }
 
         @Override
