@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/main_bg"
     android:padding="8dp"
-    tools:context=".SearchActivity">
+    tools:context=".activity.SearchActivity">
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_container_search"
         android:layout_width="wrap_content"

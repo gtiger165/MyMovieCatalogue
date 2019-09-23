@@ -10,22 +10,18 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.hirarki.mymoviecatalogue.R;
-import com.hirarki.mymoviecatalogue.SearchActivity;
 import com.hirarki.mymoviecatalogue.fragment.MovieFragment;
 import com.hirarki.mymoviecatalogue.fragment.TvShowFragment;
 
-import static com.hirarki.mymoviecatalogue.SearchActivity.EXTRA_QUERY;
-import static com.hirarki.mymoviecatalogue.SearchActivity.EXTRA_TYPE;
+import static com.hirarki.mymoviecatalogue.activity.SearchActivity.EXTRA_QUERY;
+import static com.hirarki.mymoviecatalogue.activity.SearchActivity.EXTRA_TYPE;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     FloatingActionMenu fam;

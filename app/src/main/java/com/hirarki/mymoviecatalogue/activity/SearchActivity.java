@@ -1,4 +1,4 @@
-package com.hirarki.mymoviecatalogue;
+package com.hirarki.mymoviecatalogue.activity;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.hirarki.mymoviecatalogue.R;
 import com.hirarki.mymoviecatalogue.adapter.SearchAdapter;
 import com.hirarki.mymoviecatalogue.model.Movie;
 import com.hirarki.mymoviecatalogue.model.MovieList;

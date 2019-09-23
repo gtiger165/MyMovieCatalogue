@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.hirarki.mymoviecatalogue.model.FavMovies;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static android.provider.BaseColumns._ID;
 
@@ -86,6 +87,31 @@ public class FavMovieHelper {
         }
         cursor.close();
         return list;
+    }
+
+    public List<String> selectFavPoster() {
+        List<String> posterList = new ArrayList<>();
+        Cursor cursor = database.query(DATABASE_TABLE, new String[] {PHOTO},
+                null,
+                null,
+                null,
+                null,
+                _ID + " DESC",
+                null);
+        cursor.moveToFirst();
+
+        FavMovies favMovies;
+        if (cursor.getCount() > 0) {
+            do {
+                favMovies = new FavMovies();
+                favMovies.setPhoto(cursor.getString(cursor.getColumnIndexOrThrow(PHOTO)));
+                posterList.add(favMovies.getPhoto());
+                cursor.moveToNext();
+            } while (!cursor.isAfterLast());
+        }
+
+        cursor.close();
+        return posterList;
     }
 
     public long insertFavMovie(FavMovies favMovies) {

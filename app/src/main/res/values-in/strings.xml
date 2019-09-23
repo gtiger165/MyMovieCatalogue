@@ -33,4 +33,8 @@
     <string name="search_hint">Ketikkan Judul</string>
     <string name="search_result_movie">Hasil Pencarian Film</string>
     <string name="search_result_show">Hasil Pencarian Acara</string>
+    <string name="appwidget_text">Film Favorit</string>
+    <string name="banner_image">Banner</string>
+    <string name="empty_text">Tidak Ada Favorite</string>
+    <string name="add_widget">Tambahkan Widget</string>
 </resources>
