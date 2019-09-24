@@ -26,4 +26,9 @@ public interface ApiService {
     @GET("tv")
     Call<TvShowList> searchShows(@Query("api_key") String apiKey,
                             @Query("query") String query);
+
+    @GET("movie")
+    Call<MovieList> getReleasedMovie(@Query("api_key") String apiKey,
+                                 @Query("primary_release_date.gte") String dateGte,
+                                 @Query("primary_release_date.lte") String dateLte);
 }

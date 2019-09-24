@@ -36,5 +36,13 @@
     <string name="appwidget_text">Film Favorit</string>
     <string name="banner_image">Banner</string>
     <string name="empty_text">Tidak Ada Favorite</string>
-    <string name="add_widget">Tambahkan Widget</string>
+    <string name="daily_notif">Jangan lupa cek movie hari ini</string>
+    <string name="daily_notification">Notifikasi Harian</string>
+    <string name="daily_setting">Mengaktifkan Notifikasi Harian</string>
+    <string name="disable_daily">Menonaktifkan Notifikasi Harian</string>
+    <string name="disable_release">Menonaktifkan Notifikasi Tanggal Rilis Film</string>
+    <string name="release_msg">sudah dirilis, dengan rating</string>
+    <string name="release_notification">Notifikasi Rilis Hari Ini</string>
+    <string name="release_setting">Mengaktifkan Notifikasi Tanggal Rilis Film</string>
+    <string name="title_change_settings">Pengaturan</string>
 </resources>

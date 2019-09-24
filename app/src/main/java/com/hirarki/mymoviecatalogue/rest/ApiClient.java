@@ -5,9 +5,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
     private final static String API_KEY = "37357fb4db8a115b4aaf40c9f671efde";
-    public static final String  BASE_URL = "https://api.themoviedb.org/3/discover/";
-    public static final String BASE_URL_SEARCH = "https://api.themoviedb.org/3/search/";
-    public static final String DEFAULT_LANGUAGE = "en-US";
+    private static final String  BASE_URL = "https://api.themoviedb.org/3/discover/";
+    private static final String BASE_URL_SEARCH = "https://api.themoviedb.org/3/search/";
 
     public static Retrofit retrofit;
 
