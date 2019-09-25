@@ -1,19 +1,28 @@
 package com.hirarki.mymoviecatalogue.database;
 
+import android.net.Uri;
 import android.provider.BaseColumns;
 
 public class DatabaseContract {
-    //class untuk tabel favorite movie
-    static final class FavoriteMovies implements BaseColumns {
-        static final String TABLE_NAME_MOVIE = "movie_favorites";
+    public static final String AUTHORITY = "com.hirarki.mymoviecatalogue.provider";
+    private static final String SCHEME = "content";
 
-        static final String ID_MOVIE = "id_movie";
-        static final String TITLE = "title";
-        static final String VOTE_COUNT = "vote_count";
-        static final String OVERVIEW = "overview";
-        static final String RELEASE_DATE = "release_date";
-        static final String VOTE_AVERAGE = "vote_average";
-        static final String PHOTO = "photo";
+    //class untuk tabel favorite movie
+    public static final class FavoriteMovies implements BaseColumns {
+        public static final String TABLE_NAME_MOVIE = "movie_favorites";
+
+        public static final String ID_MOVIE = "id_movie";
+        public static final String TITLE = "title";
+        public static final String VOTE_COUNT = "vote_count";
+        public static final String OVERVIEW = "overview";
+        public static final String RELEASE_DATE = "release_date";
+        public static final String VOTE_AVERAGE = "vote_average";
+        public static final String PHOTO = "photo";
+
+        public static final Uri CONTENT_URI = new Uri.Builder().scheme(SCHEME)
+                .authority(AUTHORITY)
+                .appendPath(TABLE_NAME_MOVIE)
+                .build();
     }
 
     //class untuk tabel favorite tv show

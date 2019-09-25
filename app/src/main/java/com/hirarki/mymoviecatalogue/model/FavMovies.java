@@ -1,7 +1,19 @@
 package com.hirarki.mymoviecatalogue.model;
 
+import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.hirarki.mymoviecatalogue.database.DatabaseContract;
+
+import static android.provider.BaseColumns._ID;
+import static com.hirarki.mymoviecatalogue.database.DatabaseContract.FavoriteMovies.ID_MOVIE;
+import static com.hirarki.mymoviecatalogue.database.DatabaseContract.FavoriteMovies.OVERVIEW;
+import static com.hirarki.mymoviecatalogue.database.DatabaseContract.FavoriteMovies.PHOTO;
+import static com.hirarki.mymoviecatalogue.database.DatabaseContract.FavoriteMovies.RELEASE_DATE;
+import static com.hirarki.mymoviecatalogue.database.DatabaseContract.FavoriteMovies.TITLE;
+import static com.hirarki.mymoviecatalogue.database.DatabaseContract.FavoriteMovies.VOTE_AVERAGE;
+import static com.hirarki.mymoviecatalogue.database.DatabaseContract.FavoriteMovies.VOTE_COUNT;
 
 public class FavMovies implements Parcelable {
     private int id;
@@ -95,6 +107,28 @@ public class FavMovies implements Parcelable {
     }
 
     public FavMovies() {
+    }
+
+    public FavMovies(Cursor cursor) {
+        this.id = cursor.getInt(cursor.getColumnIndex(_ID));
+        this.idMovie = cursor.getInt(cursor.getColumnIndex(ID_MOVIE));
+        this.title = cursor.getString(cursor.getColumnIndex(TITLE));
+        this.voteCount = cursor.getString(cursor.getColumnIndex(VOTE_COUNT));
+        this.overview = cursor.getString(cursor.getColumnIndex(OVERVIEW));
+        this.releaseDate = cursor.getString(cursor.getColumnIndex(RELEASE_DATE));
+        this.voteAverage = cursor.getString(cursor.getColumnIndex(VOTE_AVERAGE));
+        this.photo = cursor.getString(cursor.getColumnIndex(PHOTO));
+    }
+
+    public FavMovies(int id, int idMovie, String title, String voteCount, String overview, String releaseDate, String voteAverage, String photo) {
+        this.id = id;
+        this.idMovie = idMovie;
+        this.title = title;
+        this.voteCount = voteCount;
+        this.overview = overview;
+        this.releaseDate = releaseDate;
+        this.voteAverage = voteAverage;
+        this.photo = photo;
     }
 
     protected FavMovies(Parcel in) {

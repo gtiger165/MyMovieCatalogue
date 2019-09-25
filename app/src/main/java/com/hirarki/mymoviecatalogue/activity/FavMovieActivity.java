@@ -1,21 +1,26 @@
 package com.hirarki.mymoviecatalogue.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.database.ContentObserver;
+import android.database.Cursor;
 import android.os.AsyncTask;
-import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
+import android.os.Handler;
+import android.os.HandlerThread;
+import androidx.annotation.Nullable;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.LinearLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.widget.Toast;
 
 import com.hirarki.mymoviecatalogue.R;
 import com.hirarki.mymoviecatalogue.adapter.FavMovieAdapter;
 import com.hirarki.mymoviecatalogue.database.FavMovieHelper;
 import com.hirarki.mymoviecatalogue.helper.LoadFavCallback;
+import com.hirarki.mymoviecatalogue.helper.MappingHelper;
 import com.hirarki.mymoviecatalogue.model.FavMovies;
 import com.hirarki.mymoviecatalogue.model.FavShows;
 
@@ -25,6 +30,7 @@ import java.util.ArrayList;
 import static com.hirarki.mymoviecatalogue.activity.DetailActivity.EXTRA_POSITION;
 import static com.hirarki.mymoviecatalogue.activity.DetailActivity.REQUEST_UPDATE;
 import static com.hirarki.mymoviecatalogue.activity.DetailActivity.RESULT_DELETE;
+import static com.hirarki.mymoviecatalogue.database.DatabaseContract.FavoriteMovies.CONTENT_URI;
 
 public class FavMovieActivity extends AppCompatActivity implements LoadFavCallback, SwipeRefreshLayout.OnRefreshListener {
     RecyclerView rvFavMov;
@@ -32,6 +38,9 @@ public class FavMovieActivity extends AppCompatActivity implements LoadFavCallba
     private FavMovieAdapter adapter;
     private FavMovieHelper movieHelper;
     private static final String EXTRA_STATE = "EXTRA_STATE";
+
+    private static HandlerThread handlerThread;
+    private DataObserver observer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +61,12 @@ public class FavMovieActivity extends AppCompatActivity implements LoadFavCallba
 
         rvFavMov.setLayoutManager(new LinearLayoutManager(this));
         rvFavMov.setHasFixedSize(true);
+
+        handlerThread = new HandlerThread("DataObserver");
+        handlerThread.start();
+        Handler handler = new Handler(handlerThread.getLooper());
+        observer = new DataObserver(handler, this);
+        getContentResolver().registerContentObserver(CONTENT_URI, true, observer);
     }
 
     @Override
@@ -69,7 +84,7 @@ public class FavMovieActivity extends AppCompatActivity implements LoadFavCallba
         rvFavMov.setAdapter(adapter);
 
         if (savedInstance == null) {
-            new FavMovAsync(movieHelper, this).execute();
+            new FavMovAsync(this, this).execute();
         } else {
             ArrayList<FavMovies> list = savedInstance.getParcelableArrayList(EXTRA_STATE);
             if (list != null) {
@@ -90,9 +105,16 @@ public class FavMovieActivity extends AppCompatActivity implements LoadFavCallba
     }
 
     @Override
-    public void postExecuteMovie(ArrayList<FavMovies> favoriteMovies) {
+    public void postExecuteMovie(Cursor favCursor) {
         swipe.setRefreshing(false);
-        adapter.setFavList(favoriteMovies);
+        ArrayList<FavMovies> favList = MappingHelper.mapCursorToList(favCursor);
+
+        if (favList.size() > 0) {
+            adapter.setFavList(favList);
+        } else {
+            adapter.setFavList(new ArrayList<FavMovies>());
+            Toast.makeText(this, "No Data", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -106,18 +128,20 @@ public class FavMovieActivity extends AppCompatActivity implements LoadFavCallba
         swipe.setRefreshing(false);
     }
 
-    private static class FavMovAsync extends AsyncTask<Void, Void, ArrayList<FavMovies>> {
-        private final WeakReference<FavMovieHelper> weakReference;
+    private static class FavMovAsync extends AsyncTask<Void, Void, Cursor> {
+        private final WeakReference<Context> weakContext;
         private final WeakReference<LoadFavCallback> weakCallback;
 
-        private FavMovAsync(FavMovieHelper helper, LoadFavCallback callback) {
-            weakReference = new WeakReference<>(helper);
+        private FavMovAsync(Context context, LoadFavCallback callback) {
+            weakContext = new WeakReference<>(context);
             weakCallback = new WeakReference<>(callback);
         }
 
         @Override
-        protected ArrayList<FavMovies> doInBackground(Void... voids) {
-            return weakReference.get().getAllMoviesFav();
+        protected Cursor doInBackground(Void... voids) {
+            Context context = weakContext.get();
+            return context.getContentResolver().query(CONTENT_URI, null, null, null, null);
+//            return weakReference.get().getAllMoviesFav();
         }
 
         @Override
@@ -127,7 +151,7 @@ public class FavMovieActivity extends AppCompatActivity implements LoadFavCallba
         }
 
         @Override
-        protected void onPostExecute(ArrayList<FavMovies> favMovies) {
+        protected void onPostExecute(Cursor favMovies) {
             super.onPostExecute(favMovies);
             weakCallback.get().postExecuteMovie(favMovies);
         }
@@ -151,5 +175,20 @@ public class FavMovieActivity extends AppCompatActivity implements LoadFavCallba
     protected void onDestroy() {
         super.onDestroy();
         movieHelper.close();
+    }
+
+    public static class DataObserver extends ContentObserver {
+        Context context;
+
+        public DataObserver(Handler handler, Context context) {
+            super(handler);
+            this.context = context;
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            super.onChange(selfChange);
+            new FavMovAsync(context, (LoadFavCallback) context).execute();
+        }
     }
 }

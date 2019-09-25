@@ -1,20 +1,15 @@
 package com.hirarki.mymoviecatalogue.viewModel;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.ViewModel;
-import android.content.Context;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
+
 import android.util.Log;
 
-import com.hirarki.mymoviecatalogue.model.Movie;
 import com.hirarki.mymoviecatalogue.model.MovieList;
-import com.hirarki.mymoviecatalogue.model.TvShow;
 import com.hirarki.mymoviecatalogue.model.TvShowList;
 import com.hirarki.mymoviecatalogue.rest.ApiClient;
 import com.hirarki.mymoviecatalogue.rest.ApiService;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;

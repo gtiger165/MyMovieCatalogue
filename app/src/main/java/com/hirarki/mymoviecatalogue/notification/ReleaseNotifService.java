@@ -4,30 +4,24 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
-import android.os.IBinder;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.ContextCompat;
+
+import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 import android.util.Log;
 
 import com.firebase.jobdispatcher.JobParameters;
 import com.firebase.jobdispatcher.JobService;
-import com.google.gson.JsonParser;
 import com.hirarki.mymoviecatalogue.R;
 import com.hirarki.mymoviecatalogue.activity.MainActivity;
 import com.hirarki.mymoviecatalogue.model.Movie;
 import com.hirarki.mymoviecatalogue.model.MovieList;
 import com.hirarki.mymoviecatalogue.rest.ApiClient;
 import com.hirarki.mymoviecatalogue.rest.ApiService;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

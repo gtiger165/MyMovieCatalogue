@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.SettingsActivity"></activity>
+        <activity android:name=".activity.SettingsActivity"/>
         <activity android:name=".activity.SearchActivity" />
         <activity android:name=".activity.FavShowsActivity" />
         <activity android:name=".activity.FavMovieActivity" />
@@ -63,8 +63,17 @@
         <service
             android:name=".widget.StackWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
+
+        <provider
+            android:authorities="com.hirarki.mymoviecatalogue.provider"
+            android:name=".provider.FavMovieProvider"
+            android:exported="true"
+            android:readPermission="com.hirarki.mymoviecatalogue.READ_DATABASE"
+            android:writePermission="com.hirarki.mymoviecatalogue.WRITE_DATABASE"/>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <permission android:name="com.hirarki.mymoviecatalogue.READ_DATABASE" android:protectionLevel="normal"/>
+    <permission android:name="com.hirarki.mymoviecatalogue.WRITE_DATABASE" android:protectionLevel="normal"/>
 
 </manifest>

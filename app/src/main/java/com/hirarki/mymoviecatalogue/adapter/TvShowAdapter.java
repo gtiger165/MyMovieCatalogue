@@ -2,8 +2,8 @@ package com.hirarki.mymoviecatalogue.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +15,6 @@ import com.hirarki.mymoviecatalogue.R;
 import com.hirarki.mymoviecatalogue.activity.DetailActivity;
 import com.hirarki.mymoviecatalogue.model.TvShow;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TvShowAdapter extends RecyclerView.Adapter<TvShowAdapter.TvViewHolder> {

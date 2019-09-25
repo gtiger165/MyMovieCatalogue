@@ -1,24 +1,14 @@
 package com.hirarki.mymoviecatalogue.viewModel;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.ViewModel;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 import android.util.Log;
 
-import com.hirarki.mymoviecatalogue.model.TvShow;
 import com.hirarki.mymoviecatalogue.model.TvShowList;
 import com.hirarki.mymoviecatalogue.rest.ApiClient;
 import com.hirarki.mymoviecatalogue.rest.ApiService;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-
-import cz.msebera.android.httpclient.Header;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

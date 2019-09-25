@@ -1,20 +1,19 @@
 package com.hirarki.mymoviecatalogue.activity;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.AsyncTask;
-import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.widget.Toast;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.hirarki.mymoviecatalogue.R;
 import com.hirarki.mymoviecatalogue.adapter.FavShowsAdapter;
 import com.hirarki.mymoviecatalogue.database.FavShowHelper;
 import com.hirarki.mymoviecatalogue.helper.LoadFavCallback;
-import com.hirarki.mymoviecatalogue.model.FavMovies;
 import com.hirarki.mymoviecatalogue.model.FavShows;
 
 import java.lang.ref.WeakReference;
@@ -88,7 +87,7 @@ public class FavShowsActivity extends AppCompatActivity implements LoadFavCallba
     }
 
     @Override
-    public void postExecuteMovie(ArrayList<FavMovies> favoriteMovies) {
+    public void postExecuteMovie(Cursor favoriteMovies) {
 
     }
 

@@ -114,6 +114,16 @@ public class FavMovieHelper {
         return posterList;
     }
 
+    public Cursor favMovieProvider() {
+        return database.query(DATABASE_TABLE
+                , null
+                , null
+                , null
+                , null
+                , null
+                , _ID + " ASC");
+    }
+
     public long insertFavMovie(FavMovies favMovies) {
         ContentValues args = new ContentValues();
         args.put(ID_MOVIE, favMovies.getIdMovie());
