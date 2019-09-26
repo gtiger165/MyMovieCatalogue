@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Favorite Movie App</string>
+    <string name="movie_poster">Poster Film</string>
+    <string name="description_title">Deskripsi</string>
+    <string name="title_change_language">Ganti Bahasa</string>
+    <string name="mov_detail">Detail Film</string>
+    <string name="fav_title">Daftar Film Favorit</string>
+</resources>

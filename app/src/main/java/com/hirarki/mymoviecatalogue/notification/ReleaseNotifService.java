@@ -35,6 +35,8 @@ import retrofit2.Response;
 
 public class ReleaseNotifService extends JobService {
     private static int ID_NOTIF_RELEASE = 100;
+    private final static String GROUP_KEY_MOVIE = "group_key_movie";
+    List<Movie> listRelease;
 
     public ReleaseNotifService() {
     }
@@ -43,6 +45,12 @@ public class ReleaseNotifService extends JobService {
     public boolean onStartJob(JobParameters job) {
         getReleasedMovie(job);
         return true;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        listRelease.clear();
     }
 
     @Override
@@ -63,17 +71,11 @@ public class ReleaseNotifService extends JobService {
         releaseCall.enqueue(new Callback<MovieList>() {
             @Override
             public void onResponse(Call<MovieList> call, Response<MovieList> response) {
-                    List<Movie> listRelease = response.body().getResults();
+                listRelease = response.body().getResults();
 
-                    Movie movie = listRelease.get(0);
-                    String title = movie.getTitle();
-                    String msg = movie.getTitle() +
-                            " " + getApplicationContext().getString(R.string.release_msg) +
-                            " " + movie.getVoteAverage();
+                showNotif(getApplicationContext(), ID_NOTIF_RELEASE, listRelease);
 
-                    showNotif(getApplicationContext(), title, msg, ID_NOTIF_RELEASE);
-
-                    jobFinished(jobParameters, false);
+                jobFinished(jobParameters, false);
             }
 
             @Override
@@ -84,7 +86,7 @@ public class ReleaseNotifService extends JobService {
         });
     }
 
-    public void showNotif(Context context, String title, String message, int notifId) {
+    public void showNotif(Context context, int notifId, List<Movie> list) {
         String CHANNEL_ID = "channel_02";
         String CHANNEL_NAME = "Release Notification Channel";
         long[] vibrate = new long[]{1000, 1000, 1000, 1000, 1000};
@@ -94,13 +96,25 @@ public class ReleaseNotifService extends JobService {
         PendingIntent pendingIntent = PendingIntent.getActivity(context, notifId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Uri sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+        NotificationCompat.Builder builder;
+
+        NotificationCompat.InboxStyle style = new NotificationCompat.InboxStyle()
+                .addLine(list.get(0).getTitle()+" "+context.getString(R.string.release_msg)+" "+list.get(0).getVoteAverage())
+                .addLine(list.get(1).getTitle()+" "+context.getString(R.string.release_msg)+" "+list.get(1).getVoteAverage())
+                .addLine(list.get(2).getTitle()+" "+context.getString(R.string.release_msg)+" "+list.get(2).getVoteAverage())
+                .setBigContentTitle(context.getString(R.string.notif_release))
+                .setSummaryText(context.getString(R.string.app_name));
+
+        builder = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.ic_movie_black_24dp)
-                .setContentTitle(title)
-                .setContentText(message)
+                .setContentTitle("3 " + context.getString(R.string.notif_release))
+                .setContentText(context.getString(R.string.daily_notif))
                 .setContentIntent(pendingIntent)
+                .setGroup(GROUP_KEY_MOVIE)
+                .setGroupSummary(true)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true)
+                .setStyle(style)
                 .setSound(sound)
                 .setColor(ContextCompat.getColor(context, android.R.color.transparent))
                 .setVibrate(vibrate);
@@ -111,10 +125,15 @@ public class ReleaseNotifService extends JobService {
             channel.setVibrationPattern(vibrate);
 
             builder.setChannelId(CHANNEL_ID);
-            manager.createNotificationChannel(channel);
+
+            if (manager != null) {
+                manager.createNotificationChannel(channel);
+            }
         }
 
         Notification notification = builder.build();
-        manager.notify(notifId, notification);
+        if (manager != null) {
+            manager.notify(notifId, notification);
+        }
     }
 }

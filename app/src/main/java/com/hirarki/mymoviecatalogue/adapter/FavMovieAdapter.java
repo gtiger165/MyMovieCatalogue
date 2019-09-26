@@ -30,9 +30,7 @@ public class FavMovieAdapter extends RecyclerView.Adapter<FavMovieAdapter.FavMov
     }
 
     public void setFavList(ArrayList<FavMovies> favList) {
-        if (favList.size() > 0) {
-            this.favList.clear();
-        }
+        this.favList.clear();
         this.favList.addAll(favList);
         notifyDataSetChanged();
     }

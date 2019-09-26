@@ -45,4 +45,5 @@
     <string name="release_notification">Notifikasi Rilis Hari Ini</string>
     <string name="release_setting">Mengaktifkan Notifikasi Tanggal Rilis Film</string>
     <string name="title_change_settings">Pengaturan</string>
+    <string name="notif_release">Film Baru Dirilis</string>
 </resources>
