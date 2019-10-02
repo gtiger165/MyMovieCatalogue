@@ -1,6 +1,7 @@
 package com.hirarki.mymoviecatalogue.fragment;
 
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
@@ -16,8 +17,11 @@ import android.view.ViewGroup;
 
 import com.hirarki.mymoviecatalogue.R;
 import com.hirarki.mymoviecatalogue.adapter.TvShowAdapter;
+import com.hirarki.mymoviecatalogue.model.TvShow;
 import com.hirarki.mymoviecatalogue.model.TvShowList;
 import com.hirarki.mymoviecatalogue.viewModel.TvViewModel;
+
+import java.util.List;
 
 
 /**
@@ -38,7 +42,12 @@ public class TvShowFragment extends Fragment implements SwipeRefreshLayout.OnRef
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_tv_show, container, false);
+        return inflater.inflate(R.layout.fragment_tv_show, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         rv = view.findViewById(R.id.rv_show);
         rv.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
@@ -47,34 +56,52 @@ public class TvShowFragment extends Fragment implements SwipeRefreshLayout.OnRef
         swipeShow.setRefreshing(true);
 
         tvViewModel = ViewModelProviders.of(this).get(TvViewModel.class);
-        tvViewModel.getShows().observe(this, getShow);
+        tvViewModel.getAllShows().removeObservers(this);
+        tvViewModel.getAllShows().observe(this, getShow);
 
         swipeShow.setOnRefreshListener(this);
-
-        return view;
     }
 
-    private Observer<TvShowList> getShow = new Observer<TvShowList>() {
+    private Observer<List<TvShow>> getShow = new Observer<List<TvShow>>() {
         @Override
-        public void onChanged(@Nullable TvShowList tvShowList) {
-            adapter = new TvShowAdapter(getContext(), tvShowList.getResults());
-            rv.setAdapter(adapter);
+        public void onChanged(List<TvShow> tvShows) {
+            adapter = new TvShowAdapter(getContext(), tvShows);
+            adapter.notifyDataSetChanged();
             swipeShow.setRefreshing(false);
+            rv.setAdapter(adapter);
         }
     };
+
+//    private Observer<TvShowList> getShow = new Observer<TvShowList>() {
+//        @Override
+//        public void onChanged(@Nullable TvShowList tvShowList) {
+//            adapter = new TvShowAdapter(getContext(), tvShowList.getResults());
+//            rv.setAdapter(adapter);
+//            swipeShow.setRefreshing(false);
+//        }
+//    };
 
     @Override
     public void onRefresh() {
         Log.d("OnRefresh", "On Refresh State");
         swipeShow.setRefreshing(true);
-        tvViewModel.loadShows();
-        tvViewModel.getShows().observe(this, new Observer<TvShowList>() {
+//        tvViewModel.getAllShows().observe(this, new Observer<TvShowList>() {
+//            @Override
+//            public void onChanged(@Nullable TvShowList tvShowList) {
+//                Log.d("OnChangedRefresh", "Changed Complete");
+//                swipeShow.setRefreshing(false);
+//                adapter = new TvShowAdapter(getContext(), tvShowList.getResults());
+//                rv.setAdapter(adapter);
+//            }
+//        });
+        tvViewModel.getAllShows().observe(this, new Observer<List<TvShow>>() {
             @Override
-            public void onChanged(@Nullable TvShowList tvShowList) {
+            public void onChanged(List<TvShow> tvShows) {
                 Log.d("OnChangedRefresh", "Changed Complete");
                 swipeShow.setRefreshing(false);
-                adapter = new TvShowAdapter(getContext(), tvShowList.getResults());
+                adapter = new TvShowAdapter(getContext(), tvShows);
                 rv.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
             }
         });
     }

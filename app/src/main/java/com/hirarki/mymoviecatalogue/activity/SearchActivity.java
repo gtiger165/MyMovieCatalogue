@@ -5,7 +5,11 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.annotation.Nullable;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -58,11 +62,11 @@ public class SearchActivity extends AppCompatActivity implements SwipeRefreshLay
 
         if (type.equals("movie")) {
             getSupportActionBar().setTitle(R.string.search_result_movie);
-            searchViewModel.getMovies().observe(this, getMovie);
+            searchViewModel.getMovies().observe(SearchActivity.this, getMovie);
         }
         if (type.equals("tv_show")) {
             getSupportActionBar().setTitle(R.string.search_result_show);
-            searchViewModel.getTvShow().observe(this, getShow);
+            searchViewModel.getTvShow().observe(SearchActivity.this, getShow);
         }
     }
 
@@ -88,6 +92,14 @@ public class SearchActivity extends AppCompatActivity implements SwipeRefreshLay
     public boolean onSupportNavigateUp() {
         finish();
         return super.onSupportNavigateUp();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        searchViewModel.getMovies().removeObservers(this);
+        searchViewModel.getTvShow().removeObservers(this);
+        Log.d("SearchActivity", "onStop: executed");
     }
 
     @Override

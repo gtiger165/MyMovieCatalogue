@@ -19,7 +19,7 @@
             android:layout_height="150dp"
             android:id="@+id/img_poster_show"
             android:layout_marginBottom="4dp"
-            android:src="@color/colorPrimary"
+            card_view:srcCompat="@color/colorPrimary"
             android:contentDescription="@string/tv_show_poster"/>
 
         <TextView

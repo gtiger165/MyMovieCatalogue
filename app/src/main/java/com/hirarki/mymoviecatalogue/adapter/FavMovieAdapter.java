@@ -1,14 +1,15 @@
 package com.hirarki.mymoviecatalogue.adapter;
 
-import android.app.Activity;
 import android.content.Intent;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.hirarki.mymoviecatalogue.R;
@@ -19,9 +20,9 @@ import java.util.ArrayList;
 
 public class FavMovieAdapter extends RecyclerView.Adapter<FavMovieAdapter.FavMovieHolder> {
     private ArrayList<FavMovies> favList = new ArrayList<>();
-    private final Activity activity;
+    private final AppCompatActivity activity;
 
-    public FavMovieAdapter(Activity activity) {
+    public FavMovieAdapter(AppCompatActivity activity) {
         this.activity = activity;
     }
 

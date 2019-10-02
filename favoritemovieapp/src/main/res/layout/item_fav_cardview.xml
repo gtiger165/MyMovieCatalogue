@@ -19,7 +19,7 @@
             android:layout_height="150dp"
             android:id="@+id/img_poster_movie"
             android:layout_marginBottom="4dp"
-            android:src="@color/colorAccent"
+            card_view:srcCompat="@color/colorAccent"
             android:contentDescription="@string/movie_poster"/>
 
         <TextView
