@@ -13,21 +13,21 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface ApiService {
-    @GET("movie")
+    @GET("discover/movie")
     Call<MovieList> getMovieList(@Query("api_key") String apiKey);
 
-    @GET("tv")
+    @GET("discover/tv")
     Call<TvShowList> getShowList(@Query("api_key") String apiKey);
 
-    @GET("movie")
+    @GET("search/movie")
     Call<MovieList> searchMovies(@Query("api_key") String apiKey,
                              @Query("query") String query);
 
-    @GET("tv")
+    @GET("search/tv")
     Call<TvShowList> searchShows(@Query("api_key") String apiKey,
                             @Query("query") String query);
 
-    @GET("movie")
+    @GET("discover/movie")
     Call<MovieList> getReleasedMovie(@Query("api_key") String apiKey,
                                  @Query("primary_release_date.gte") String dateGte,
                                  @Query("primary_release_date.lte") String dateLte);

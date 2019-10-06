@@ -15,17 +15,20 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MovieViewModel extends ViewModel {
-    private final static String api = ApiClient.getApiKey();
+    private String api = ApiClient.getApiKey();
     private MutableLiveData<MovieList> listMovies;
 
     public void loadMovies() {
         ApiService service = ApiClient.getClient().create(ApiService.class);
 
         Call<MovieList> movieCall = service.getMovieList(api);
+
         movieCall.enqueue(new Callback<MovieList>() {
             @Override
             public void onResponse(Call<MovieList> call, Response<MovieList> response) {
-                listMovies.setValue(response.body());
+                if (response.isSuccessful()) {
+                    listMovies.setValue(response.body());
+                }
             }
 
             @Override

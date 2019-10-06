@@ -14,17 +14,20 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class TvViewModel extends ViewModel {
-    private final static String api = ApiClient.getApiKey();
+    private static String api = ApiClient.getApiKey();
     private MutableLiveData<TvShowList> listTvShow;
 
     public void loadShows() {
         ApiService service = ApiClient.getClient().create(ApiService.class);
+        Log.d("TvViewModel", "api key: " + api);
 
         Call<TvShowList> showsCall = service.getShowList(api);
         showsCall.enqueue(new Callback<TvShowList>() {
             @Override
             public void onResponse(Call<TvShowList> call, Response<TvShowList> response) {
-                listTvShow.setValue(response.body());
+                if (response.isSuccessful()) {
+                    listTvShow.setValue(response.body());
+                }
             }
 
             @Override

@@ -20,15 +20,18 @@ public class SearchViewModel extends ViewModel {
     private MutableLiveData<TvShowList> searchedShow = new MutableLiveData<>();
 
     public void getResult(String type, String query) {
-        final ApiService service = ApiClient.getClientSearch().create(ApiService.class);
+        final ApiService service = ApiClient.getClient().create(ApiService.class);
 
         if (type.equals("movie")) {
             Call<MovieList> movieCall = service.searchMovies(ApiClient.getApiKey(), query);
+            Log.d("SearchViewModel", "getResult: " + movieCall.toString());
 
             movieCall.enqueue(new Callback<MovieList>() {
                 @Override
                 public void onResponse(Call<MovieList> call, Response<MovieList> response) {
-                    searchedMovie.setValue(response.body());
+                    if (response.isSuccessful()) {
+                        searchedMovie.setValue(response.body());
+                    }
                 }
 
                 @Override
@@ -43,7 +46,9 @@ public class SearchViewModel extends ViewModel {
             showCall.enqueue(new Callback<TvShowList>() {
                 @Override
                 public void onResponse(Call<TvShowList> call, Response<TvShowList> response) {
-                    searchedShow.setValue(response.body());
+                    if (response.isSuccessful()) {
+                        searchedShow.setValue(response.body());
+                    }
                 }
 
                 @Override
